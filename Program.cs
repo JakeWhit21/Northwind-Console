@@ -374,7 +374,7 @@ try
                         }
                     }
                 }
-                else if (choice == "5")
+                else if (choice == "5") 
                 {
                     var query = db.Categories.OrderBy(c => c.CategoryId);
 
