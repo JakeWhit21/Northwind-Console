@@ -122,6 +122,8 @@ try
                 Console.WriteLine("4) Display specific product in Products table");
                 Console.WriteLine("Press enter to quit");
                 choice = Console.ReadLine();
+                Console.Clear();
+                logger.Info($"Option {choice} selected");
 
                 if (choice == "1")
                 {
@@ -291,6 +293,8 @@ try
                 Console.WriteLine("5) Display specific category and its related active product data");
                 Console.WriteLine("Press enter to quit");
                 choice = Console.ReadLine();
+                Console.Clear();
+                logger.Info($"Option {choice} selected");
 
                 if (choice == "1")
                 {
@@ -318,6 +322,7 @@ try
 
                             db.Categories.Add(category);
                             db.SaveChanges();
+                            logger.Info($"Category '{category.CategoryName}' added");
                         }
                     }
                     if (!isValid)
@@ -373,7 +378,7 @@ try
                 {
                     var query = db.Categories.OrderBy(c => c.CategoryId);
 
-                    Console.WriteLine("Select the category whose products you want to display:");
+                    Console.WriteLine("Select the category whose active products you want to display:");
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     foreach (var item in query)
                     {
