@@ -344,7 +344,20 @@ try
                         }
                     }
                 }
-                else if (choice == "3") 
+                else if (choice == "3")
+                {
+                    var query = db.Categories.OrderBy(p => p.CategoryName);
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"{query.Count()} records returned");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    foreach (var item in query)
+                    {
+                        Console.WriteLine($"{item.CategoryName} - {item.Description}");
+                    }
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else if (choice == "4")
                 {
                     
                 }
