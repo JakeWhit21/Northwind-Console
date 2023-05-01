@@ -30,7 +30,7 @@ try
         logger.Info($"Option {choice} selected");
         if (choice == "1")
         {
-            var query = db.Categories.OrderBy(p => p.CategoryName);
+            var query = db.Categories.OrderBy(c => c.CategoryName);
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{query.Count()} records returned");
@@ -80,7 +80,7 @@ try
         }
         else if (choice == "3")
         {
-            var query = db.Categories.OrderBy(p => p.CategoryId);
+            var query = db.Categories.OrderBy(c => c.CategoryId);
 
             Console.WriteLine("Select the category whose products you want to display:");
             Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -346,7 +346,7 @@ try
                 }
                 else if (choice == "3")
                 {
-                    var query = db.Categories.OrderBy(p => p.CategoryName);
+                    var query = db.Categories.OrderBy(c => c.CategoryName);
 
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"{query.Count()} records returned");
@@ -358,6 +358,18 @@ try
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 else if (choice == "4")
+                {
+                    var query = db.Categories.Include(category => category.Products.Where(product => product.Discontinued == false)).OrderBy(c => c.CategoryId);
+                    foreach (var item in query)
+                    {
+                        Console.WriteLine($"{item.CategoryName}");
+                        foreach (Product p in item.Products)
+                        {
+                            Console.WriteLine($"\t{p.ProductName}");
+                        }
+                    }
+                }
+                else if (choice == "5")
                 {
                     
                 }
