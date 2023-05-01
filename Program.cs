@@ -371,7 +371,24 @@ try
                 }
                 else if (choice == "5")
                 {
-                    
+                    var query = db.Categories.OrderBy(c => c.CategoryId);
+
+                    Console.WriteLine("Select the category whose products you want to display:");
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    foreach (var item in query)
+                    {
+                        Console.WriteLine($"{item.CategoryId}) {item.CategoryName}");
+                    }
+                    Console.ForegroundColor = ConsoleColor.White;
+                    int id = int.Parse(Console.ReadLine());
+                    Console.Clear();
+                    logger.Info($"CategoryId {id} selected");
+                    Category category = db.Categories.Include(category => category.Products.Where(product => product.Discontinued == false)).FirstOrDefault(c => c.CategoryId == id);
+                    Console.WriteLine($"{category.CategoryName} - {category.Description}");
+                    foreach (Product p in category.Products)
+                    {
+                        Console.WriteLine($"\t{p.ProductName}");
+                    }
                 }
 
             } while (choice == "1" || choice == "2" || choice == "3" || choice == "4" || choice == "5");
