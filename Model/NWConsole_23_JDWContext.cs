@@ -34,7 +34,7 @@ namespace Northwind_Console.Model
             .AddJsonFile($"appsettings.json");
 
             var config = configuration.Build();
-            optionsBuilder.UseSqlServer(@config["BlogsConsole:ConnectionString"]);
+            optionsBuilder.UseSqlServer(@config["Northwind:ConnectionString"]);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

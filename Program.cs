@@ -288,7 +288,7 @@ try
                 Console.WriteLine("2) Edit record from Categories table");
                 Console.WriteLine("3) Display all category names and descriptions in Categories table");
                 Console.WriteLine("4) Display all categories and their related active products");
-                Console.WriteLine(" 5) Display specific category and its related active product data");
+                Console.WriteLine("5) Display specific category and its related active product data");
                 Console.WriteLine("Press enter to quit");
                 choice = Console.ReadLine();
 
@@ -329,6 +329,22 @@ try
                     }
                 }
                 else if (choice == "2")
+                {
+                    Console.WriteLine("Choose Category to edit:");
+                    var category = GetCategory(db, logger);
+                    if (category != null)
+                    {
+                        //input category
+                        Category UpdatedCategory = InputCategory(db, logger);
+                        if (UpdatedCategory != null)
+                        {
+                            category.CategoryName = UpdatedCategory.CategoryName;
+                            db.SaveChanges();
+                            logger.Info("category edited successfully");
+                        }
+                    }
+                }
+                else if (choice == "3") 
                 {
                     
                 }
