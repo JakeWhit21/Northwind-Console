@@ -23,6 +23,7 @@ try
         Console.WriteLine("3) Display Category and related products");
         Console.WriteLine("4) Display all Categories and their related products");
         Console.WriteLine("5) Part 1 requirements");
+        Console.WriteLine("6) Part 2 requirements");
         Console.WriteLine("\"q\" to quit");
         choice = Console.ReadLine();
         Console.Clear();
@@ -64,7 +65,7 @@ try
                 else
                 {
                     logger.Info("Validation passed");
-                    // TODO: save category to db
+
                     db.Categories.Add(category);
                     db.SaveChanges();
                 }
@@ -278,6 +279,62 @@ try
             } while (choice == "1" || choice == "2" || choice == "3" || choice == "4");
 
         }
+        else if (choice == "6")
+        {
+            do
+            {
+                Console.WriteLine("----------------Part 2----------------");
+                Console.WriteLine("1) Add new record to Categories table");
+                Console.WriteLine("2) Edit record from Categories table");
+                Console.WriteLine("3) Display all category names and descriptions in Categories table");
+                Console.WriteLine("4) Display all categories and their related active products");
+                Console.WriteLine(" 5) Display specific category and its related active product data");
+                Console.WriteLine("Press enter to quit");
+                choice = Console.ReadLine();
+
+                if (choice == "1")
+                {
+                    Category category = new Category();
+                    Console.WriteLine("Enter Category Name:");
+                    category.CategoryName = Console.ReadLine();
+                    Console.WriteLine("Enter the Category Description:");
+                    category.Description = Console.ReadLine();
+                    ValidationContext context = new ValidationContext(category, null, null);
+                    List<ValidationResult> results = new List<ValidationResult>();
+
+                    var isValid = Validator.TryValidateObject(category, context, results, true);
+                    if (isValid)
+                    {
+                        // check for unique name
+                        if (db.Categories.Any(c => c.CategoryName == category.CategoryName))
+                        {
+                            // generate validation error
+                            isValid = false;
+                            results.Add(new ValidationResult("Name exists", new string[] { "CategoryName" }));
+                        }
+                        else
+                        {
+                            logger.Info("Validation passed");
+
+                            db.Categories.Add(category);
+                            db.SaveChanges();
+                        }
+                    }
+                    if (!isValid)
+                    {
+                        foreach (var result in results)
+                        {
+                            logger.Error($"{result.MemberNames.First()} : {result.ErrorMessage}");
+                        }
+                    }
+                }
+                else if (choice == "2")
+                {
+                    
+                }
+
+            } while (choice == "1" || choice == "2" || choice == "3" || choice == "4" || choice == "5");
+        }
         Console.WriteLine();
 
     } while (choice.ToLower() != "q");
@@ -332,7 +389,7 @@ static Product InputProduct(NWConsole_23_JDWContext db, Logger logger)
             return product;
         }
     }
-    
+
     foreach (var result in results)
     {
         logger.Error($"{result.MemberNames.First()} : {result.ErrorMessage}");
@@ -393,4 +450,3 @@ static Category InputCategory(NWConsole_23_JDWContext db, Logger logger)
 }
 
 
-    
