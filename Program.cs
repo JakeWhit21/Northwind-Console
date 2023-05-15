@@ -133,7 +133,7 @@ try
                     Console.WriteLine("Enter Product Name:");
                     product.ProductName = Console.ReadLine();
                     Console.WriteLine("Enter the id of the category this product is from:");
-                    var categoriesQuery = db.Categories.OrderBy(p => p.CategoryName);
+                    var categoriesQuery = db.Categories.OrderBy(p => p.CategoryId);
                     foreach (var item in categoriesQuery)
                     {
                         Console.WriteLine($"{item.CategoryId}: {item.CategoryName} - {item.Description}");
